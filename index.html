@@ -294,9 +294,9 @@
 <!-- JUMPSCARE-HUG SCREEN -->
 <div class="screen hidden" id="jump">
   <div class="hug-stage">
-    <span class="hug-arm left">🐾</span>
+    <span class="hug-arm left">🫱</span>
     <span class="jump-emoji" id="jumpEmoji">🐶</span>
-    <span class="hug-arm right">🐾</span>
+    <span class="hug-arm right">🫲</span>
   </div>
   <div class="jump-text">surprise!! it's just a big hug 🤗</div>
 </div>
@@ -393,8 +393,8 @@ function spawnScreenHug(){
   overlay.className = 'hug-overlay';
   overlay.innerHTML =
     '<div class="ov-flash"></div>' +
-    '<span class="ov-paw left">🐾</span>' +
-    '<span class="ov-paw right">🐾</span>';
+    '<span class="ov-paw left">🫱</span>' +
+    '<span class="ov-paw right">🫲</span>';
   document.body.appendChild(overlay);
   setTimeout(() => overlay.remove(), 900);
 }
