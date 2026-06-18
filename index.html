@@ -202,6 +202,48 @@
   }
   .footnote .big{ font-size: 15px; font-weight:700; color: var(--pink-deep); display:block; margin-bottom: 6px; }
 
+  /* ---------- full-screen hug overlay ---------- */
+  .hug-overlay{
+    position: fixed; inset: 0; z-index: 50;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .hug-overlay .ov-paw{
+    position: absolute;
+    top: 50%;
+    font-size: 24vw;
+    opacity: 0;
+  }
+  .hug-overlay .ov-paw.left{
+    left: -25%;
+    animation: ovLeft 0.85s ease forwards;
+  }
+  .hug-overlay .ov-paw.right{
+    right: -25%;
+    animation: ovRight 0.85s ease forwards;
+  }
+  @keyframes ovLeft{
+    0%{ transform: translate(-30%,-50%) rotate(-30deg) scale(0.6); opacity:0; }
+    45%{ transform: translate(20%,-50%) rotate(10deg) scale(1.15); opacity:0.95; }
+    100%{ transform: translate(0%,-50%) rotate(0deg) scale(0.95); opacity:0; }
+  }
+  @keyframes ovRight{
+    0%{ transform: translate(30%,-50%) rotate(30deg) scale(0.6); opacity:0; }
+    45%{ transform: translate(-20%,-50%) rotate(-10deg) scale(1.15); opacity:0.95; }
+    100%{ transform: translate(0%,-50%) rotate(0deg) scale(0.95); opacity:0; }
+  }
+  .hug-overlay .ov-flash{
+    position:absolute; inset:0;
+    background: radial-gradient(circle, rgba(255,255,255,0.6), rgba(255,255,255,0));
+    opacity:0;
+    animation: ovFlash 0.85s ease forwards;
+  }
+  @keyframes ovFlash{
+    0%{ opacity:0; }
+    40%{ opacity:1; }
+    100%{ opacity:0; }
+  }
+
   .sparkle{
     position:fixed; font-size:16px; animation: sparkle-fade 1s ease forwards; pointer-events:none; z-index:6;
   }
@@ -346,6 +388,17 @@ function randomPair(){
   return pairs[i];
 }
 
+function spawnScreenHug(){
+  const overlay = document.createElement('div');
+  overlay.className = 'hug-overlay';
+  overlay.innerHTML =
+    '<div class="ov-flash"></div>' +
+    '<span class="ov-paw left">🐾</span>' +
+    '<span class="ov-paw right">🐾</span>';
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.remove(), 900);
+}
+
 function spawnSparkles(){
   for(let i=0;i<6;i++){
     const s = document.createElement('div');
@@ -397,6 +450,7 @@ document.getElementById('hugBtn').addEventListener('click', () => {
 
   card.classList.remove('squeeze');
   requestAnimationFrame(() => { card.classList.add('squeeze'); });
+  spawnScreenHug();
 
   count++;
   document.getElementById('counter').textContent = 'hugs collected: ' + count;
