@@ -216,31 +216,34 @@
   }
   .hug-overlay .ov-paw.left{
     left: -25%;
-    animation: ovLeft 0.85s ease forwards;
+    animation: ovLeft 2.4s ease forwards;
   }
   .hug-overlay .ov-paw.right{
     right: -25%;
-    animation: ovRight 0.85s ease forwards;
+    animation: ovRight 2.4s ease forwards;
   }
   @keyframes ovLeft{
     0%{ transform: translate(-30%,-50%) rotate(-30deg) scale(0.6); opacity:0; }
-    45%{ transform: translate(20%,-50%) rotate(10deg) scale(1.15); opacity:0.95; }
+    25%{ transform: translate(20%,-50%) rotate(10deg) scale(1.15); opacity:0.95; }
+    70%{ transform: translate(15%,-50%) rotate(6deg) scale(1.1); opacity:0.95; }
     100%{ transform: translate(0%,-50%) rotate(0deg) scale(0.95); opacity:0; }
   }
   @keyframes ovRight{
     0%{ transform: translate(30%,-50%) rotate(30deg) scale(0.6); opacity:0; }
-    45%{ transform: translate(-20%,-50%) rotate(-10deg) scale(1.15); opacity:0.95; }
+    25%{ transform: translate(-20%,-50%) rotate(-10deg) scale(1.15); opacity:0.95; }
+    70%{ transform: translate(-15%,-50%) rotate(-6deg) scale(1.1); opacity:0.95; }
     100%{ transform: translate(0%,-50%) rotate(0deg) scale(0.95); opacity:0; }
   }
   .hug-overlay .ov-flash{
     position:absolute; inset:0;
     background: radial-gradient(circle, rgba(255,255,255,0.6), rgba(255,255,255,0));
     opacity:0;
-    animation: ovFlash 0.85s ease forwards;
+    animation: ovFlash 2.4s ease forwards;
   }
   @keyframes ovFlash{
     0%{ opacity:0; }
-    40%{ opacity:1; }
+    25%{ opacity:0.9; }
+    70%{ opacity:0.3; }
     100%{ opacity:0; }
   }
 
@@ -400,7 +403,7 @@ function spawnScreenHug(){
     '<span class="ov-paw left">🫱</span>' +
     '<span class="ov-paw right">🫲</span>';
   document.body.appendChild(overlay);
-  setTimeout(() => overlay.remove(), 900);
+  setTimeout(() => overlay.remove(), 2400);
 }
 
 function spawnSparkles(){
@@ -447,23 +450,31 @@ document.getElementById('msgBtn').addEventListener('click', () => {
 });
 
 document.getElementById('hugBtn').addEventListener('click', () => {
-  const [e, m, v, ref] = randomPair();
   const emoji = document.getElementById('emoji');
   const message = document.getElementById('message');
   const verse = document.getElementById('verse');
   const card = document.querySelector('.card');
 
+  count++;
+
   emoji.style.animation = 'none';
   requestAnimationFrame(() => { emoji.style.animation = 'pop 0.5s ease'; });
-  emoji.textContent = e;
-  message.textContent = m;
-  verse.innerHTML = '"' + v + '"<span class="ref">— ' + ref + ' (KJV)</span>';
+
+  if (count === 20) {
+    emoji.textContent = '🎁';
+    message.textContent = "20 hugs collected! An irl hug is coming soon, Babi.";
+    verse.innerHTML = '"Behold, I will bring it health and cure, and I will cure them, and will reveal unto them abundance of peace and truth."<span class="ref">— Jeremiah 33:6 (KJV)</span>';
+  } else {
+    const [e, m, v, ref] = randomPair();
+    emoji.textContent = e;
+    message.textContent = m;
+    verse.innerHTML = '"' + v + '"<span class="ref">— ' + ref + ' (KJV)</span>';
+  }
 
   card.classList.remove('squeeze');
   requestAnimationFrame(() => { card.classList.add('squeeze'); });
   spawnScreenHug();
 
-  count++;
   document.getElementById('counter').textContent = 'hugs collected: ' + count;
   spawnSparkles();
 });
