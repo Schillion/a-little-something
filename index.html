@@ -3,194 +3,316 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>A Little Something For Hannah 🐾</title>
+<title>A Little Something For Babi 🐾</title>
 <style>
   :root{
-    --pink: #ffd6e8;
-    --pink-deep: #f6a6c9;
-    --lavender: #e3d6ff;
-    --lavender-deep: #c3a8f8;
-    --text: #5b4b66;
+    --pink: #ffe1ef;
+    --pink2: #ffc6e0;
+    --pink-deep: #ff9fc9;
+    --lavender: #f0e3ff;
+    --lavender-deep: #d6b8ff;
+    --text: #7a5475;
   }
-  *{ box-sizing: border-box; }
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html,body{
-    margin:0; padding:0; min-height:100%;
+    margin:0; padding:0; min-height:100%; height:100%;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: linear-gradient(160deg, var(--pink) 0%, var(--lavender) 55%, var(--lavender-deep) 100%);
     color: var(--text);
-    overflow-x:hidden;
-  }
-  .wrap{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding: 32px 18px 60px;
-    text-align:center;
-    position:relative;
-  }
-  .paws{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:0;
     overflow:hidden;
   }
-  .paw{
-    position:absolute;
-    font-size: 22px;
-    opacity:0.25;
-    animation: float 14s linear infinite;
+  .screen{
+    position:fixed; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding: 24px;
   }
+  .hidden{ display:none !important; }
+
+  /* ---------- floating background paws ---------- */
+  .paws{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+  .paw{ position:absolute; font-size: 22px; opacity:0.28; animation: float linear infinite; }
   @keyframes float{
     0%{ transform: translateY(110vh) rotate(0deg); }
     100%{ transform: translateY(-10vh) rotate(360deg); }
   }
-  h1{
-    font-size: clamp(26px, 6vw, 38px);
-    margin: 0 0 6px;
+
+  /* ---------- start screen ---------- */
+  #start h1{
+    font-size: clamp(26px, 7vw, 40px);
+    margin: 0 0 10px;
     z-index:1;
   }
-  .subtitle{
-    font-size: clamp(14px, 3.6vw, 17px);
-    opacity:0.85;
-    margin-bottom: 28px;
-    z-index:1;
-    max-width: 320px;
+  #start p{
+    font-size: clamp(14px, 4vw, 17px);
+    opacity:0.85; max-width:300px; z-index:1;
   }
+  .tap-btn{
+    z-index:1; margin-top: 26px;
+    border:none; cursor:pointer;
+    background: linear-gradient(135deg, var(--pink-deep), var(--lavender-deep));
+    color:white; font-size:18px; font-weight:700;
+    padding: 16px 36px; border-radius: 999px;
+    box-shadow: 0 10px 22px rgba(214, 184, 255, 0.55);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform: scale(1); }
+    50%{ transform: scale(1.06); }
+  }
+  .bounce-emoji{
+    font-size: 64px; z-index:1; margin-bottom: 6px;
+    animation: bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{ transform: translateY(0) rotate(-4deg); }
+    50%{ transform: translateY(-10px) rotate(4deg); }
+  }
+
+  /* ---------- jumpscare-hug screen ---------- */
+  #jump{
+    background: white;
+    z-index: 5;
+  }
+  .hug-stage{
+    position:relative;
+    width: 70vw; height: 70vw;
+    max-width: 300px; max-height: 300px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #jump .jump-emoji{
+    font-size: clamp(90px, 32vw, 180px);
+    animation: jumpscare 0.55s cubic-bezier(.2,1.4,.4,1) forwards, squeeze 0.5s ease 0.7s 2;
+    z-index:2;
+  }
+  @keyframes jumpscare{
+    0%{ transform: scale(0.05); opacity: 0; }
+    55%{ transform: scale(1.3); opacity: 1; }
+    75%{ transform: scale(0.92); }
+    100%{ transform: scale(1.05); }
+  }
+  @keyframes squeeze{
+    0%,100%{ transform: scale(1.05); }
+    50%{ transform: scale(0.9) scaleX(1.1); }
+  }
+  .hug-arm{
+    position:absolute;
+    font-size: clamp(60px, 22vw, 120px);
+    z-index:1;
+    opacity:0;
+  }
+  .hug-arm.left{
+    left: 6%;
+    animation: hugLeft 0.6s ease forwards;
+    animation-delay: 0.45s;
+  }
+  .hug-arm.right{
+    right: 6%;
+    animation: hugRight 0.6s ease forwards;
+    animation-delay: 0.45s;
+  }
+  @keyframes hugLeft{
+    0%{ transform: translateX(-60%) rotate(-40deg) scale(0.6); opacity:0; }
+    100%{ transform: translateX(0%) rotate(20deg) scale(1); opacity:1; }
+  }
+  @keyframes hugRight{
+    0%{ transform: translateX(60%) rotate(40deg) scale(0.6); opacity:0; }
+    100%{ transform: translateX(0%) rotate(-20deg) scale(1); opacity:1; }
+  }
+  #jump.shake{ animation: shake 0.4s linear; }
+  @keyframes shake{
+    0%,100%{ transform: translate(0,0); }
+    20%{ transform: translate(-6px,4px); }
+    40%{ transform: translate(6px,-4px); }
+    60%{ transform: translate(-4px,-6px); }
+    80%{ transform: translate(4px,6px); }
+  }
+  #jump .jump-text{
+    margin-top: 18px;
+    font-size: clamp(20px, 6vw, 28px);
+    font-weight: 700;
+    color: var(--pink-deep);
+    opacity:0;
+    animation: fadein 0.5s ease forwards;
+    animation-delay: 0.9s;
+  }
+  @keyframes fadein{ to{ opacity:1; } }
+
+  /* ---------- main game screen ---------- */
+  #game{ justify-content: flex-start; padding-top: 8vh; }
+  #game h1{ font-size: clamp(24px, 6vw, 34px); margin: 0 0 4px; z-index:1; }
+  #game .subtitle{ font-size: clamp(13px, 3.4vw, 15px); opacity:0.85; margin-bottom: 22px; z-index:1; }
+
   .card{
-    background: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.7);
     backdrop-filter: blur(6px);
-    border-radius: 24px;
-    padding: 28px 22px;
-    max-width: 360px;
-    width: 100%;
-    box-shadow: 0 10px 30px rgba(195, 168, 248, 0.35);
-    z-index:1;
-    margin-bottom: 22px;
+    border-radius: 26px;
+    padding: 26px 20px;
+    max-width: 360px; width:100%;
+    box-shadow: 0 12px 28px rgba(214, 184, 255, 0.4);
+    z-index:1; margin-bottom: 18px;
+    border: 2px solid rgba(255,159,201,0.5);
+  }
+  .card.squeeze{ animation: cardSqueeze 0.4s ease; }
+  @keyframes cardSqueeze{
+    0%{ transform: scale(1); }
+    40%{ transform: scale(0.93) scaleX(1.04); }
+    100%{ transform: scale(1); }
   }
   .card .emoji{
-    font-size: 52px;
-    display:block;
-    margin-bottom: 14px;
+    font-size: 50px; display:block; margin-bottom: 12px;
     animation: pop 0.5s ease;
   }
   @keyframes pop{
-    0%{ transform: scale(0.6); opacity:0; }
-    100%{ transform: scale(1); opacity:1; }
+    0%{ transform: scale(0.5) rotate(-10deg); opacity:0; }
+    100%{ transform: scale(1) rotate(0); opacity:1; }
   }
-  .card p{
-    font-size: clamp(16px, 4vw, 19px);
-    line-height: 1.5;
-    margin: 0;
-    min-height: 70px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  .card .message{
+    font-size: clamp(15px, 4vw, 18px); line-height:1.5; margin: 0 0 14px;
+    min-height: 50px;
   }
-  button{
-    border:none;
-    background: linear-gradient(135deg, var(--pink-deep), var(--lavender-deep));
-    color: white;
-    font-size: 17px;
-    font-weight:600;
-    padding: 14px 30px;
-    border-radius: 999px;
-    cursor:pointer;
-    box-shadow: 0 8px 18px rgba(195, 168, 248, 0.5);
-    transition: transform 0.15s ease;
-    z-index:1;
-    -webkit-tap-highlight-color: transparent;
-  }
-  button:active{
-    transform: scale(0.95);
-  }
-  .counter{
-    margin-top:14px;
-    font-size: 13px;
-    opacity:0.7;
-    z-index:1;
-  }
-  .footnote{
-    margin-top: 34px;
-    font-size: 13px;
-    opacity:0.75;
-    max-width: 300px;
-    z-index:1;
+  .card .verse{
+    font-size: clamp(13px, 3.6vw, 15px);
+    font-style: italic;
+    color: var(--pink-deep);
+    border-top: 1px dashed rgba(214,184,255,0.7);
+    padding-top: 12px;
     line-height:1.5;
   }
+  .card .verse .ref{
+    display:block; margin-top:6px; font-weight:700; font-style:normal; font-size: 12px; opacity:0.8;
+  }
+
+  button.main-btn{
+    border:none; cursor:pointer;
+    background: linear-gradient(135deg, var(--pink-deep), var(--lavender-deep));
+    color: white; font-size: 17px; font-weight:700;
+    padding: 14px 30px; border-radius: 999px;
+    box-shadow: 0 8px 18px rgba(214, 184, 255, 0.55);
+    transition: transform 0.15s ease;
+    z-index:1;
+  }
+  button.main-btn:active{ transform: scale(0.94); }
+
+  .counter{ margin-top:12px; font-size: 13px; opacity:0.75; z-index:1; }
+
+  .footnote{
+    margin-top: 26px; font-size: 13px; opacity:0.85; max-width: 300px; z-index:1; line-height:1.6;
+    padding-bottom: 30px;
+  }
+  .footnote .big{ font-size: 15px; font-weight:700; color: var(--pink-deep); display:block; margin-bottom: 6px; }
+
   .sparkle{
-    position:absolute;
-    font-size:14px;
-    animation: sparkle-fade 1s ease forwards;
-    pointer-events:none;
-    z-index:2;
+    position:fixed; font-size:16px; animation: sparkle-fade 1s ease forwards; pointer-events:none; z-index:6;
   }
   @keyframes sparkle-fade{
     0%{ opacity:1; transform: translateY(0) scale(1); }
-    100%{ opacity:0; transform: translateY(-40px) scale(1.3); }
+    100%{ opacity:0; transform: translateY(-50px) scale(1.4); }
   }
+
+  .game-scroll{ width:100%; overflow-y:auto; height:100%; padding-bottom:20px; }
 </style>
 </head>
 <body>
 
 <div class="paws" id="paws"></div>
 
-<div class="wrap">
-  <h1>Hi Hannah 🐶🐱</h1>
-  <div class="subtitle">a tiny secret corner just for you, full of hugs and good vibes</div>
+<!-- START SCREEN -->
+<div class="screen" id="start">
+  <div class="bounce-emoji">🐶🐱</div>
+  <h1>Hi Babi 🐾</h1>
+  <p>i made a tiny secret game just for you... tap if you dare 👀</p>
+  <button class="tap-btn" id="startBtn">Tap me, Babi</button>
+</div>
 
-  <div class="card">
-    <span class="emoji" id="emoji">🤗</span>
-    <p id="message">Tap the button below for a little hug.</p>
+<!-- JUMPSCARE-HUG SCREEN -->
+<div class="screen hidden" id="jump">
+  <div class="hug-stage">
+    <span class="hug-arm left">🐾</span>
+    <span class="jump-emoji" id="jumpEmoji">🐶</span>
+    <span class="hug-arm right">🐾</span>
   </div>
+  <div class="jump-text">surprise!! it's just a big hug 🤗</div>
+</div>
 
-  <button id="hugBtn">Send me a hug 🐾</button>
-  <div class="counter" id="counter">hugs received: 0</div>
+<!-- GAME SCREEN -->
+<div class="screen hidden" id="game">
+  <div class="game-scroll">
+    <h1>You found the hugs, Babi 🐾</h1>
+    <div class="subtitle">tap the button for another hug + a little verse</div>
 
-  <div class="footnote">
-    ito pa lng for now, wait ka lng~ 🐾<br/>
-    more cute stuff coming soon, just for you.
+    <div class="card">
+      <span class="emoji" id="emoji">🤗</span>
+      <p class="message" id="message">Here's a warm hug to start.</p>
+      <div class="verse" id="verse">
+        "The Lord is near to the brokenhearted, and saveth such as be of a contrite spirit."
+        <span class="ref">— Psalm 34:18 (KJV)</span>
+      </div>
+    </div>
+
+    <button class="main-btn" id="hugBtn">Send another hug 🐾</button>
+    <div class="counter" id="counter">hugs collected: 1</div>
+
+    <div class="footnote">
+      <span class="big">I'm always here for you.</span>
+      ito pa lng for now, wait ka lng~ 🐾<br/>
+      more cute stuff coming soon, just for you, Babi.
+    </div>
   </div>
 </div>
 
 <script>
-const messages = [
-  ["🤗", "Sending you the biggest, warmest hug right now."],
-  ["🐶", "A golden retriever just wagged its tail extra hard, thinking of you."],
-  ["🐱", "Somewhere a cat is purring, and it's basically you-shaped happiness."],
-  ["🌸", "You're doing better than you think. Keep going."],
-  ["☁️", "Take a deep breath. You're allowed to rest today."],
-  ["🐾", "Pawsitive vibes incoming, no cap."],
-  ["✨", "You make ordinary days feel a little brighter."],
-  ["🦴", "Here's a virtual treat, just because you deserve one."],
-  ["🌻", "Whatever today threw at you, you handled it. Proud of you."],
-  ["🐕", "Imagine the fluffiest puppy running up to greet you. That's this message."],
-  ["🐈", "A tiny cat headbutt of support, delivered straight to your phone."],
-  ["💪", "You're tougher than you give yourself credit for."],
-  ["🍵", "Go grab something warm to drink. You've earned a little break."],
-  ["🌈", "Rough moments pass. You always find your way back to okay."],
-  ["🐾", "Sending paw-shaped good energy your way."],
-  ["🐩", "A whole squad of good dogs is rooting for you today."],
-  ["🐈‍⬛", "Even grumpy cats approve of how hard you're trying."],
-  ["🫶", "You don't have to be 'on' all the time. It's okay to just be."],
-  ["🌙", "However today went, you made it through. That counts."],
-  ["🐇", "Soft, gentle, and entirely on your side — that's this message."]
+const pairs = [
+  ["🤗","Sending you the biggest, warmest hug right now.",
+    "The Lord is near to the brokenhearted, and saveth such as be of a contrite spirit.","Psalm 34:18"],
+  ["🐶","A golden retriever just wagged its tail extra hard, thinking of you.",
+    "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee.","Isaiah 41:10"],
+  ["🐱","Somewhere a cat is purring, and it's basically you-shaped happiness.",
+    "The Lord is my shepherd; I shall not want.","Psalm 23:1"],
+  ["🌸","You're doing better than you think. Keep going.",
+    "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.","Philippians 4:6"],
+  ["☁️","Take a deep breath. You're allowed to rest today.",
+    "God is our refuge and strength, a very present help in trouble.","Psalm 46:1"],
+  ["🐾","Pawsitive vibes incoming, no cap.",
+    "Trust in the Lord with all thine heart; and lean not unto thine own understanding.","Proverbs 3:5"],
+  ["✨","You make ordinary days feel a little brighter.",
+    "Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed.","Joshua 1:9"],
+  ["🦴","Here's a virtual treat, just because you deserve one.",
+    "Cast thy burden upon the Lord, and he shall sustain thee.","Psalm 55:22"],
+  ["🌻","Whatever today threw at you, you handled it. Proud of you.",
+    "Come unto me, all ye that labour and are heavy laden, and I will give you rest.","Matthew 11:28"],
+  ["🐕","Imagine the fluffiest puppy running up to greet you. That's this message.",
+    "He healeth the broken in heart, and bindeth up their wounds.","Psalm 147:3"],
+  ["🐈","A tiny cat headbutt of support, delivered straight to your phone.",
+    "My grace is sufficient for thee: for my strength is made perfect in weakness.","2 Corinthians 12:9"],
+  ["💪","You're tougher than you give yourself credit for.",
+    "In the multitude of my thoughts within me thy comforts delight my soul.","Psalm 94:19"],
+  ["🍵","Go grab something warm to drink. You've earned a little break.",
+    "The Lord is good, a strong hold in the day of trouble.","Nahum 1:7"],
+  ["🌈","Rough moments pass. You always find your way back to okay.",
+    "The Lord also will be a refuge for the oppressed, a refuge in times of trouble.","Psalm 9:9"],
+  ["🐩","A whole squad of good dogs is rooting for you today.",
+    "The Lord thy God in the midst of thee is mighty; he will save, he will rejoice over thee with joy.","Zephaniah 3:17"],
+  ["🐈‍⬛","Even grumpy cats approve of how hard you're trying.",
+    "I will lift up mine eyes unto the hills, from whence cometh my help.","Psalm 121:1"],
+  ["🫶","You don't have to be 'on' all the time. It's okay to just be.",
+    "They that wait upon the Lord shall renew their strength; they shall mount up with wings as eagles.","Isaiah 40:31"],
+  ["🌙","However today went, you made it through. That counts.",
+    "I have set the Lord always before me: because he is at my right hand, I shall not be moved.","Psalm 16:8"],
+  ["🐇","Soft, gentle, and entirely on your side — that's this message.",
+    "Be strong and of a good courage, fear not, nor be afraid... the Lord thy God, he it is that doth go with thee.","Deuteronomy 31:6"],
+  ["🐾","You are loved more than you know, Babi.",
+    "Casting all your care upon him; for he careth for you.","1 Peter 5:7"]
 ];
 
-const emoji = document.getElementById('emoji');
-const message = document.getElementById('message');
-const btn = document.getElementById('hugBtn');
-const counterEl = document.getElementById('counter');
-let count = 0;
-let lastIndex = -1;
+let lastIndex = 0;
+let count = 1;
 
-function randomMessage(){
+function randomPair(){
   let i;
-  do { i = Math.floor(Math.random() * messages.length); } while (i === lastIndex);
+  do { i = Math.floor(Math.random() * pairs.length); } while (i === lastIndex);
   lastIndex = i;
-  return messages[i];
+  return pairs[i];
 }
 
 function spawnSparkles(){
@@ -198,25 +320,52 @@ function spawnSparkles(){
     const s = document.createElement('div');
     s.className = 'sparkle';
     s.textContent = ['✨','🐾','💫','🌸'][Math.floor(Math.random()*4)];
-    s.style.left = (40 + Math.random()*20) + '%';
-    s.style.top = (35 + Math.random()*10) + '%';
+    s.style.left = (20 + Math.random()*60) + '%';
+    s.style.top = (30 + Math.random()*20) + '%';
     document.body.appendChild(s);
     setTimeout(() => s.remove(), 1000);
   }
 }
 
-btn.addEventListener('click', () => {
-  const [e, m] = randomMessage();
+const startScreen = document.getElementById('start');
+const jumpScreen = document.getElementById('jump');
+const gameScreen = document.getElementById('game');
+const jumpEmoji = document.getElementById('jumpEmoji');
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  startScreen.classList.add('hidden');
+  jumpScreen.classList.remove('hidden');
+  jumpEmoji.textContent = ['🐶','🐱'][Math.floor(Math.random()*2)];
+  jumpScreen.classList.add('shake');
+
+  setTimeout(() => {
+    jumpScreen.classList.add('hidden');
+    jumpScreen.classList.remove('shake');
+    gameScreen.classList.remove('hidden');
+  }, 1500);
+});
+
+document.getElementById('hugBtn').addEventListener('click', () => {
+  const [e, m, v, ref] = randomPair();
+  const emoji = document.getElementById('emoji');
+  const message = document.getElementById('message');
+  const verse = document.getElementById('verse');
+  const card = document.querySelector('.card');
+
   emoji.style.animation = 'none';
   requestAnimationFrame(() => { emoji.style.animation = 'pop 0.5s ease'; });
   emoji.textContent = e;
   message.textContent = m;
+  verse.innerHTML = '"' + v + '"<span class="ref">— ' + ref + ' (KJV)</span>';
+
+  card.classList.remove('squeeze');
+  requestAnimationFrame(() => { card.classList.add('squeeze'); });
+
   count++;
-  counterEl.textContent = 'hugs received: ' + count;
+  document.getElementById('counter').textContent = 'hugs collected: ' + count;
   spawnSparkles();
 });
 
-// floating background paw prints
 const pawsContainer = document.getElementById('paws');
 const pawEmojis = ['🐾','🐶','🐱'];
 for(let i=0;i<14;i++){
