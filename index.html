@@ -291,12 +291,16 @@
   <button class="tap-btn" id="startBtn">Tap me, Babi</button>
 </div>
 
+<!-- LOADING SCREEN (delay before jumpscare so it's unexpected) -->
+<div class="screen hidden" id="loading">
+  <div class="bounce-emoji">🌸</div>
+  <p>loading your little something...</p>
+</div>
+
 <!-- JUMPSCARE-HUG SCREEN -->
 <div class="screen hidden" id="jump">
   <div class="hug-stage">
-    <span class="hug-arm left">🫱</span>
     <span class="jump-emoji" id="jumpEmoji">🐶</span>
-    <span class="hug-arm right">🫲</span>
   </div>
   <div class="jump-text">surprise!! it's just a big hug 🤗</div>
 </div>
@@ -416,18 +420,25 @@ const jumpScreen = document.getElementById('jump');
 const msgScreen = document.getElementById('msg');
 const gameScreen = document.getElementById('game');
 const jumpEmoji = document.getElementById('jumpEmoji');
+const loadingScreen = document.getElementById('loading');
 
 document.getElementById('startBtn').addEventListener('click', () => {
   startScreen.classList.add('hidden');
-  jumpScreen.classList.remove('hidden');
-  jumpEmoji.textContent = ['🐶','🐱'][Math.floor(Math.random()*2)];
-  jumpScreen.classList.add('shake');
+  loadingScreen.classList.remove('hidden');
 
+  const delay = 2500 + Math.random() * 2500;
   setTimeout(() => {
-    jumpScreen.classList.add('hidden');
-    jumpScreen.classList.remove('shake');
-    msgScreen.classList.remove('hidden');
-  }, 1900);
+    loadingScreen.classList.add('hidden');
+    jumpScreen.classList.remove('hidden');
+    jumpEmoji.textContent = ['🐶','🐱'][Math.floor(Math.random()*2)];
+    jumpScreen.classList.add('shake');
+
+    setTimeout(() => {
+      jumpScreen.classList.add('hidden');
+      jumpScreen.classList.remove('shake');
+      msgScreen.classList.remove('hidden');
+    }, 1900);
+  }, delay);
 });
 
 document.getElementById('msgBtn').addEventListener('click', () => {
