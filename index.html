@@ -211,6 +211,30 @@
   }
 
   .game-scroll{ width:100%; overflow-y:auto; height:100%; padding-bottom:20px; }
+
+  /* ---------- message screen ---------- */
+  #msg .msg-emoji{
+    font-size: 56px; z-index:1; margin-bottom: 10px;
+    opacity:0; animation: fadein 0.6s ease forwards;
+  }
+  #msg .msg-text{
+    font-size: clamp(18px, 5vw, 23px);
+    font-weight: 700;
+    line-height: 1.6;
+    max-width: 320px;
+    color: var(--text);
+    z-index:1;
+    opacity:0;
+    animation: fadein 0.6s ease forwards;
+    animation-delay: 0.4s;
+  }
+  #msg .msg-text .pink{ color: var(--pink-deep); }
+  #msg .main-btn{
+    margin-top: 28px;
+    opacity:0;
+    animation: fadein 0.6s ease forwards;
+    animation-delay: 1s;
+  }
 </style>
 </head>
 <body>
@@ -233,6 +257,13 @@
     <span class="hug-arm right">🐾</span>
   </div>
   <div class="jump-text">surprise!! it's just a big hug 🤗</div>
+</div>
+
+<!-- MESSAGE SCREEN -->
+<div class="screen hidden" id="msg">
+  <div class="msg-emoji">🌸</div>
+  <p class="msg-text">I know you're down,<br/>so here's a <span class="pink">little something</span> from me. 🐾</p>
+  <button class="main-btn" id="msgBtn">Open it, Babi</button>
 </div>
 
 <!-- GAME SCREEN -->
@@ -329,6 +360,7 @@ function spawnSparkles(){
 
 const startScreen = document.getElementById('start');
 const jumpScreen = document.getElementById('jump');
+const msgScreen = document.getElementById('msg');
 const gameScreen = document.getElementById('game');
 const jumpEmoji = document.getElementById('jumpEmoji');
 
@@ -341,8 +373,13 @@ document.getElementById('startBtn').addEventListener('click', () => {
   setTimeout(() => {
     jumpScreen.classList.add('hidden');
     jumpScreen.classList.remove('shake');
-    gameScreen.classList.remove('hidden');
-  }, 1500);
+    msgScreen.classList.remove('hidden');
+  }, 1900);
+});
+
+document.getElementById('msgBtn').addEventListener('click', () => {
+  msgScreen.classList.add('hidden');
+  gameScreen.classList.remove('hidden');
 });
 
 document.getElementById('hugBtn').addEventListener('click', () => {
